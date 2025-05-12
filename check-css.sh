@@ -11,7 +11,11 @@ echo "🔍 Verificando exercício 01 - Métodos de Adicionar CSS..."
 pass=true
 
 # Verifica se o div está estilizado via CSS externo
-if grep -E 'div *\{[^}]*background[^}]*red[^}]*color[^}]*white[^}]*font-size[^}]*32px[^}]*text-align[^}]*center[^}]*font-weight[^}]*bold' "$css_file" > /dev/null; then
+if awk '/div *\{/,/\}/' "$css_file" | grep -q 'background-color: *red' &&
+   awk '/div *\{/,/\}/' "$css_file" | grep -q 'color: *white' &&
+   awk '/div *\{/,/\}/' "$css_file" | grep -q 'font-size: *32px' &&
+   awk '/div *\{/,/\}/' "$css_file" | grep -q 'text-align: *center' &&
+   awk '/div *\{/,/\}/' "$css_file" | grep -q 'font-weight: *bold'; then
   echo "✅ div com CSS externo está correto"
 else
   echo "❌ div com CSS externo está incorreto ou incompleto"
@@ -45,7 +49,6 @@ fi
 # Resultado final
 if $pass; then
   echo "🎉 Todos os testes passaram para o exercício 01"
-  exit 0
 else
   echo "❌ Alguns testes falharam no exercício 01"
   exit 1
@@ -124,7 +127,6 @@ else
   echo "❌ Alguns testes falharam no exercício 02"
   exit 1
 fi
-
 ## 03
 
 exercise_path="foundations/intro-to-css/03-grouping-selectors"
